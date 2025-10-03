@@ -17,6 +17,24 @@ class _Home extends State<Home> {
   final dolarController = TextEditingController();
   final euroController = TextEditingController();
 
+  _realChagend(String text) {
+    double real = double.parse(text);
+    dolarController.text = (real / dolar).toStringAsFixed(2);
+    euroController.text = (real / euro).toStringAsFixed(2);
+  }
+
+  _dolarChanged(String text) {
+    double dolar = double.parse(text);
+    realController.text = (dolar * this.dolar).toStringAsFixed(2);
+    euroController.text = (dolar * this.dolar / euro).toStringAsFixed(2);
+  }
+
+  _euroChagend(String text) {
+    double euro = double.parse(text);
+    realController.text = (euro * this.euro).toStringAsFixed(2);
+    dolarController.text = (euro * this.euro / dolar).toStringAsFixed(2);
+  }
+
   @override
   Widget build(BuildContext conext) {
     return Scaffold(
@@ -68,13 +86,28 @@ class _Home extends State<Home> {
                         size: 150,
                         color: Colors.amber,
                       ),
-                      buildTextField('Real', 'R\$ ', realController),
+                      buildTextField(
+                        'Real',
+                        'R\$ ',
+                        realController,
+                        _realChagend,
+                      ),
 
                       SizedBox(height: 16),
-                      buildTextField('Dólar', 'US\$ ', dolarController),
+                      buildTextField(
+                        'Dólar',
+                        'US\$ ',
+                        dolarController,
+                        _dolarChanged,
+                      ),
 
                       SizedBox(height: 16),
-                      buildTextField('Euro', '€ ', euroController),
+                      buildTextField(
+                        'Euro',
+                        '€ ',
+                        euroController,
+                        _euroChagend,
+                      ),
                     ],
                   ),
                 );
